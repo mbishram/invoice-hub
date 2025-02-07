@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 
 // ** Next Imports
 import type { Metadata } from "next";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 
 // ** MUI Imports
 import { CssBaseline } from "@mui/material";
@@ -28,9 +29,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* Normalize element */}
-      <CssBaseline />
-      <body>{children}</body>
+      <body>
+        <AppRouterCacheProvider>
+          {/* Normalize element */}
+          <CssBaseline />
+          {children}
+        </AppRouterCacheProvider>
+      </body>
     </html>
   );
 }

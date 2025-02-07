@@ -1,11 +1,26 @@
+// ** Next Imports
+import type { Metadata } from "next";
+import Image from "next/image";
+
 // ** MUI Imports
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+
+// ** Util Imports
+import { getTitleMeta } from "@/utils/page.utils";
+
+// ** Asset Imports
+import logo from "@/assets/images/logo.svg";
+
+export const metadata: Metadata = {
+  title: getTitleMeta("Add Invoice"),
+};
 
 export default function InvoiceAdd() {
   return (
-    <div>
+    <Box bgcolor="grey">
+      <Image src={logo} alt="App logo" width={500} height={500} />
       <Button variant="contained">Lorem Ipsum</Button>
       <Typography>Invoice Add</Typography>
-    </div>
+    </Box>
   );
 }

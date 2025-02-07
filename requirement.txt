@@ -1,0 +1,62 @@
+Challenge Overview: Create two main pages that mirror our Figma design
+
+Add Invoice Page: 
+- A clean form interface with the following fields: 
+- Invoice name (with validation)
+- Invoice number (auto-generated with "INV" prefix)
+- Due date (with date picker)
+- Amount (with currency formatting)
+- Status dropdown (Paid/Unpaid/Pending)
+- Success notification toast after submission
+My Invoices Page:
+- Table view of invoices with columns: 
+- Invoice name & number
+- Due date
+- Status (with colored badges - green for Paid, red for Unpaid, yellow for Pending)
+- Amount (formatted in Rupiah)
+- Actions menu
+- Search functionality (updates URL query params)
+- Status filter dropdown (updates URL query params)
+- Delete an invoice
+- Optional: Edit/Update an Invoice 
+
+Technical Requirements:
+- Next.js 14 App Router
+- React Hook Form with Zod validation
+- MUI components for UI elements
+- TypeScript with strict mode enabled
+- All the invoices data should not lose on the page refreshes
+- Proper loading and error states
+- Responsive design matching provided UI
+
+Project Structure
+src/
+  app/
+    invoices/
+      add/
+        page.tsx
+      list/
+        page.tsx 
+  components/
+    invoices/
+  constants/
+  lib/
+    schemas/
+    types/
+  hooks/ 
+  utils/
+
+Submission and Evaluation Criteria
+
+Submission:
+- Provide a GitHub repository with clear setup instructions
+- Include a brief explanation of your technical decisions
+- Ensure the code follows the provided structure
+Evaluation Criteria:
+- Clean code organization following the project structure
+- Implementation of form validation and error handling
+- Proper use of TypeScript and MUI components
+- UI/UX matching the provided design
+- Code reusability and component separation
+
+UI Design on Figma: https://www.figma.com/design/JgZrN7zuHEr5TlnuApwuyD/FE-Engineer-Challenge---Nabitu?node-id=0-1&t=fDbbNWU6DqcTR78o-1

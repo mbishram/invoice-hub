@@ -1,9 +1,8 @@
+// ** Next Imports
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return (
-    <div>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem deserunt
-      explicabo ipsam nemo odio optio qui quibusdam quos rem sapiente. Ad cumque
-      dolorum nesciunt nobis? Accusantium ducimus quia ut voluptatem.
-    </div>
-  );
+  // Redirect to /invoice/add when opening web root.
+  // This was done because there's nothing in web root.
+  redirect("/invoices/add");
 }

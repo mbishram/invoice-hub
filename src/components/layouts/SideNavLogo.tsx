@@ -4,9 +4,6 @@ import Image from "next/image";
 // ** MUI Imports
 import { Box, BoxProps } from "@mui/material";
 
-// ** Asset Imports
-import logo from "@/assets/images/logo.svg";
-
 // ** Config Imports
 import { passionOne } from "@/configs/font.configs";
 
@@ -23,7 +20,12 @@ export default function SideNavLogo(props: Omit<BoxProps, "children">) {
       fontSize="1.5rem"
       {...props}
     >
-      <Image src={logo} alt={`${APP_NAME}'s logo`} height={44} />
+      <Image
+        src="/images/logo.svg"
+        alt={`${APP_NAME}'s logo`}
+        height={44}
+        width={42}
+      />
       {APP_NAME}
     </Box>
   );

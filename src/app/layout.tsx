@@ -6,7 +6,10 @@ import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 
 // ** MUI Imports
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+
+// ** Layout Imports
+import MainLayout from "@/layouts/MainLayout";
 
 // ** Util Imports
 import { getTitleMeta } from "@/utils/page.utils";
@@ -26,16 +29,24 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={openSans.variable}>
+    <Box component="html" lang="en" minHeight="100%" display="flex">
+      <Box
+        component="body"
+        className={openSans.variable}
+        display="flex"
+        flexDirection="column"
+        flexGrow={1}
+      >
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            {/* Normalize element */}
-            <CssBaseline />
-            {children}
+            <MainLayout>
+              {/* Normalize element */}
+              <CssBaseline />
+              {children}
+            </MainLayout>
           </ThemeProvider>
         </AppRouterCacheProvider>
-      </body>
-    </html>
+      </Box>
+    </Box>
   );
 }

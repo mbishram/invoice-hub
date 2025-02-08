@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function InvoiceAdd() {
   return (
-    <Box bgcolor="grey">
+    <Box bgcolor="background.dark">
       <Image src={logo} alt="App logo" width={500} height={500} />
       <Button variant="contained">Lorem Ipsum</Button>
       <Typography>Invoice Add</Typography>

@@ -17,7 +17,7 @@ import CapitalLetter from "@/components/icons/CapitalLetter";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 // ** Store Imports
-import useSideNavStore, { toggleSideNav } from "@/stores/sideNav.store";
+import useSideNavStore, { setSideNav } from "@/stores/sideNav.store";
 
 // ** Constant Imports
 import { APP_SIDE_NAV_WIDTH } from "@/constants/app.constants";
@@ -28,7 +28,7 @@ export default function SideNav() {
   const isMobile = useIsMobile();
 
   // Vars
-  const handleClose = () => toggleSideNav(false);
+  const handleClose = () => setSideNav(false);
 
   return (
     <Box width={{ md: APP_SIDE_NAV_WIDTH }}>

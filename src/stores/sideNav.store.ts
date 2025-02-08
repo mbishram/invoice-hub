@@ -13,7 +13,7 @@ const useSideNavStore = create<SideNavState>(() => ({
  * Set open state of side navigation
  * @param value {boolean}
  */
-export const toggleSideNav = (value: boolean) =>
+export const setSideNav = (value: boolean) =>
   useSideNavStore.setState({ open: value });
 
 export default useSideNavStore;

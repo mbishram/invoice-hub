@@ -4,8 +4,21 @@
 import { Button } from "@mui/material";
 
 // ** Store Imports
-import { toggleSideNav } from "@/stores/sideNav.store";
+import { setSideNav } from "@/stores/sideNav.store";
 
 export default function SideNavToggleButton() {
-  return <Button onClick={() => toggleSideNav(true)}>Test</Button>;
+  // Hooks
+  const isMobile = useIsMobile();
+
+  if (!isMobile) return null;
+
+  return (
+    <OutlinedIconButton
+      color="inherit"
+      aria-label="Toggle side navigation"
+      onClick={() => setSideNav(true)}
+    >
+      <Menu />
+    </OutlinedIconButton>
+  );
 }

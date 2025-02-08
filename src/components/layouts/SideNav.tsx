@@ -32,7 +32,7 @@ export default function SideNav() {
 
   return (
     <Box width={{ md: APP_SIDE_NAV_WIDTH }}>
-      {open && (
+      {open && isMobile && (
         <IconButton
           size="small"
           sx={{

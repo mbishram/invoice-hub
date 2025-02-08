@@ -13,6 +13,9 @@ const theme = createTheme({
       dark: "#1c2434",
     },
   },
+  typography: {
+    fontFamily: "var(--font-open-sans)",
+  },
 });
 
 export default theme;

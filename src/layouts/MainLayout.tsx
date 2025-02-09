@@ -19,7 +19,9 @@ export default function MainLayout({ children, ...props }: BoxProps) {
         flexGrow={1}
       >
         <NavBar />
-        <Container sx={{ display: "flex", flexGrow: 1, py: 6 }}>
+        <Container
+          sx={{ display: "flex", flexDirection: "column", flexGrow: 1, py: 6 }}
+        >
           {children}
         </Container>
       </Box>

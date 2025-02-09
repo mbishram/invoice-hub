@@ -94,7 +94,7 @@ const theme = createTheme({
             alignItems: "unset",
           },
           "& .MuiInputAdornment-root": {
-            backgroundColor: "var(--mui-palette-grey-200)",
+            backgroundColor: "var(--mui-palette-divider)",
             maxHeight: "unset",
             padding: "0 1.5rem",
             margin: 0,

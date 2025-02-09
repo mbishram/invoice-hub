@@ -83,6 +83,22 @@ const theme = createTheme({
         root: { paddingLeft: "3rem", paddingRight: "3rem" },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        adornedStart: {
+          "&.MuiInputBase-root": {
+            paddingLeft: 0,
+            alignItems: "unset",
+          },
+          "& .MuiInputAdornment-root": {
+            backgroundColor: "var(--mui-palette-grey-200)",
+            maxHeight: "unset",
+            padding: "0 1.5rem",
+            margin: 0,
+          },
+        },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         input: { padding: "0.75rem 1.25rem" },

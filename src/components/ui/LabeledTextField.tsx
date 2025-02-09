@@ -6,7 +6,7 @@ import LabeledFieldGroup, {
   LabeledFieldGroupProps,
 } from "@/components/ui/LabeledFieldGroup";
 
-type LabeledTextFieldProps = TextFieldProps & {
+export type LabeledTextFieldProps = TextFieldProps & {
   GroupProps?: LabeledFieldGroupProps;
 };
 

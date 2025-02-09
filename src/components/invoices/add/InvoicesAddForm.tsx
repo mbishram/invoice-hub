@@ -10,6 +10,7 @@ import {
 // ** Component Imports
 import LabeledTextField from "@/components/ui/LabeledTextField";
 import LabeledDateField from "@/components/ui/LabeledDateField";
+import LabeledCurrencyField from "@/components/ui/LabeledCurrencyField";
 
 // ** Icon Imports
 import { Add } from "@mui/icons-material";
@@ -36,8 +37,15 @@ export default function InvoicesAddForm() {
           required
         />
         <LabeledDateField
-          label="Test Label"
+          label="Date"
           name="date"
+          required
+          GroupProps={{ mt: 2 }}
+        />
+        <LabeledCurrencyField
+          label="Currency"
+          name="test"
+          placeholder="Enter your invoice name"
           required
           GroupProps={{ mt: 2 }}
         />

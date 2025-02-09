@@ -82,6 +82,14 @@ const theme = createTheme({
         root: { paddingLeft: "3rem", paddingRight: "3rem" },
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: { padding: "0.75rem 1.25rem" },
+      },
+    },
+    MuiTextField: {
+      defaultProps: { fullWidth: true, size: "medium" },
+    },
   },
   cssVariables: {
     colorSchemeSelector: "class",

@@ -7,6 +7,9 @@ import {
   CardHeader,
 } from "@mui/material";
 
+// ** Component Imports
+import LabeledTextField from "@/components/ui/LabeledTextField";
+
 // ** Icon Imports
 import { Add } from "@mui/icons-material";
 
@@ -17,7 +20,7 @@ export default function InvoicesAddForm() {
   return (
     <Card>
       <CardHeader
-        title="Tewt Title"
+        title="Invoice Form"
         slotProps={{
           title: {
             className: inter.className,
@@ -25,10 +28,12 @@ export default function InvoicesAddForm() {
         }}
       />
       <CardContent>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eaque
-        fugiat magnam minus quidem ratione, sint. Accusamus illum, in ipsa
-        laudantium minima nisi odit pariatur quos repellat repellendus
-        repudiandae, sed?
+        <LabeledTextField
+          label="Test Label"
+          name="test"
+          placeholder="Enter your invoice name"
+          required
+        />
       </CardContent>
       <CardActions sx={{ justifyContent: "end" }}>
         <Button variant="contained" size="large" startIcon={<Add />}>

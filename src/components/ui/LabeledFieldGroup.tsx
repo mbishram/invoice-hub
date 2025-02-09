@@ -1,7 +1,7 @@
 // ** MUI Imports
 import { BaseTextFieldProps, Box, BoxProps, Typography } from "@mui/material";
 
-type LabeledFieldGroupProps = Pick<
+export type LabeledFieldGroupProps = Pick<
   BaseTextFieldProps,
   "label" | "name" | "required"
 > &

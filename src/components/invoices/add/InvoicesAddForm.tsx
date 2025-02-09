@@ -9,6 +9,7 @@ import {
 
 // ** Component Imports
 import LabeledTextField from "@/components/ui/LabeledTextField";
+import LabeledDateField from "@/components/ui/LabeledDateField";
 
 // ** Icon Imports
 import { Add } from "@mui/icons-material";
@@ -33,6 +34,12 @@ export default function InvoicesAddForm() {
           name="test"
           placeholder="Enter your invoice name"
           required
+        />
+        <LabeledDateField
+          label="Test Label"
+          name="date"
+          required
+          GroupProps={{ mt: 2 }}
         />
       </CardContent>
       <CardActions sx={{ justifyContent: "end" }}>

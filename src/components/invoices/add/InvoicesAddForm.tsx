@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  Grid2 as Grid,
   MenuItem,
 } from "@mui/material";
 
@@ -19,6 +20,9 @@ import { Add } from "@mui/icons-material";
 // ** Config Imports
 import { inter } from "@/configs/font.configs";
 
+// ** Constant Imports
+import { INVOICE_STATUS_OPTIONS } from "@/constants/invoiceStatus.constants";
+
 export default function InvoicesAddForm() {
   return (
     <Card>
@@ -30,37 +34,58 @@ export default function InvoicesAddForm() {
           },
         }}
       />
+
       <CardContent>
-        <LabeledTextField
-          label="Test Label"
-          name="test"
-          placeholder="Enter your invoice name"
-          required
-        />
-        <LabeledDateField
-          label="Date"
-          name="date"
-          required
-          GroupProps={{ mt: 2 }}
-        />
-        <LabeledCurrencyField
-          label="Currency"
-          name="test"
-          placeholder="Enter your invoice name"
-          required
-          GroupProps={{ mt: 2 }}
-        />
-        <LabeledTextField
-          label="Test Label"
-          name="test"
-          placeholder="Enter your invoice name"
-          required
-          GroupProps={{ mt: 2 }}
-          select
-        >
-          <MenuItem value={1}>Test</MenuItem>
-        </LabeledTextField>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <LabeledTextField
+              label="Name"
+              name="name"
+              placeholder="Enter your invoice name"
+              required
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <LabeledTextField
+              label="Number"
+              name="number"
+              placeholder="Enter your invoice number"
+              required
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <LabeledDateField label="Due Date" name="dueDate" required />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <LabeledCurrencyField
+              label="Amount"
+              name="amount"
+              placeholder="Enter your invoice amount"
+              required
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 6 }}>
+            <LabeledTextField
+              label="Status"
+              name="status"
+              placeholder="Choose the status"
+              required
+              select
+            >
+              {INVOICE_STATUS_OPTIONS.map(({ value, label }, index) => (
+                <MenuItem key={value + index} value={value}>
+                  {label}
+                </MenuItem>
+              ))}
+            </LabeledTextField>
+          </Grid>
+        </Grid>
       </CardContent>
+
       <CardActions sx={{ justifyContent: "end" }}>
         <Button variant="contained" size="large" startIcon={<Add />}>
           Add Invoice

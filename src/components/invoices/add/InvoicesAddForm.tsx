@@ -5,6 +5,7 @@ import {
   CardActions,
   CardContent,
   CardHeader,
+  MenuItem,
 } from "@mui/material";
 
 // ** Component Imports
@@ -49,6 +50,16 @@ export default function InvoicesAddForm() {
           required
           GroupProps={{ mt: 2 }}
         />
+        <LabeledTextField
+          label="Test Label"
+          name="test"
+          placeholder="Enter your invoice name"
+          required
+          GroupProps={{ mt: 2 }}
+          select
+        >
+          <MenuItem value={1}>Test</MenuItem>
+        </LabeledTextField>
       </CardContent>
       <CardActions sx={{ justifyContent: "end" }}>
         <Button variant="contained" size="large" startIcon={<Add />}>

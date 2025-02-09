@@ -23,8 +23,9 @@ const theme = createTheme({
     dark: {
       palette: {
         background: {
-          default: "#19191a",
-          dark: "#161f29",
+          default: "#13181c",
+          paper: "#13181c",
+          dark: "#162029",
         },
       },
     },

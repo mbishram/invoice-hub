@@ -1,5 +1,5 @@
 // ** MUI Imports
-import { Box, BoxProps } from "@mui/material";
+import { Box, BoxProps, Container } from "@mui/material";
 
 // ** Component Imports
 import SideNav from "@/components/layouts/SideNav";
@@ -19,9 +19,9 @@ export default function MainLayout({ children, ...props }: BoxProps) {
         flexGrow={1}
       >
         <NavBar />
-        <Box display="flex" flexGrow={1}>
+        <Container sx={{ display: "flex", flexGrow: 1, py: 6 }}>
           {children}
-        </Box>
+        </Container>
       </Box>
     </Box>
   );

@@ -48,7 +48,7 @@ export default function RootLayout({
         flexGrow={1}
       >
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
+          <ThemeProvider theme={theme} defaultMode="light">
             {/* Init script to prevent flicker when switching theme mode */}
             <InitColorSchemeScript attribute="class" />
             <MainLayout>

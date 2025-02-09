@@ -13,6 +13,7 @@ import {
 import LabeledTextField from "@/components/ui/LabeledTextField";
 import LabeledDateField from "@/components/ui/LabeledDateField";
 import LabeledCurrencyField from "@/components/ui/LabeledCurrencyField";
+import InlineAlert from "@/components/ui/InlineAlert";
 
 // ** Icon Imports
 import { Add } from "@mui/icons-material";
@@ -25,72 +26,82 @@ import { INVOICE_STATUS_OPTIONS } from "@/constants/invoiceStatus.constants";
 
 export default function InvoicesAddForm() {
   return (
-    <Card>
-      <CardHeader
-        title="Invoice Form"
-        slotProps={{
-          title: {
-            className: inter.className,
-          },
-        }}
+    <>
+      <Card>
+        <CardHeader
+          title="Invoice Form"
+          slotProps={{
+            title: {
+              className: inter.className,
+            },
+          }}
+        />
+
+        <CardContent>
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <LabeledTextField
+                label="Name"
+                name="name"
+                placeholder="Enter your invoice name"
+                required
+              />
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <LabeledTextField
+                label="Number"
+                name="number"
+                placeholder="Enter your invoice number"
+                required
+              />
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <LabeledDateField label="Due Date" name="dueDate" required />
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <LabeledCurrencyField
+                label="Amount"
+                name="amount"
+                placeholder="Enter your invoice amount"
+                required
+              />
+            </Grid>
+
+            <Grid size={{ xs: 12, sm: 6 }}>
+              <LabeledTextField
+                label="Status"
+                name="status"
+                placeholder="Choose the status"
+                required
+                select
+              >
+                {INVOICE_STATUS_OPTIONS.map(({ value, label }, index) => (
+                  <MenuItem key={value + index} value={value}>
+                    {label}
+                  </MenuItem>
+                ))}
+              </LabeledTextField>
+            </Grid>
+          </Grid>
+        </CardContent>
+
+        <CardActions sx={{ justifyContent: "end" }}>
+          <Button variant="contained" size="large" startIcon={<Add />}>
+            Add Invoice
+          </Button>
+        </CardActions>
+      </Card>
+
+      <InlineAlert
+        hidden={false}
+        severity="success"
+        header="Invoice added successfully!"
+        content="You can view and manage your invoice in the &#39;My Invoices&#39; section."
+        sx={{ mt: 4 }}
       />
-
-      <CardContent>
-        <Grid container spacing={2}>
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <LabeledTextField
-              label="Name"
-              name="name"
-              placeholder="Enter your invoice name"
-              required
-            />
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <LabeledTextField
-              label="Number"
-              name="number"
-              placeholder="Enter your invoice number"
-              required
-            />
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <LabeledDateField label="Due Date" name="dueDate" required />
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <LabeledCurrencyField
-              label="Amount"
-              name="amount"
-              placeholder="Enter your invoice amount"
-              required
-            />
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 6 }}>
-            <LabeledTextField
-              label="Status"
-              name="status"
-              placeholder="Choose the status"
-              required
-              select
-            >
-              {INVOICE_STATUS_OPTIONS.map(({ value, label }, index) => (
-                <MenuItem key={value + index} value={value}>
-                  {label}
-                </MenuItem>
-              ))}
-            </LabeledTextField>
-          </Grid>
-        </Grid>
-      </CardContent>
-
-      <CardActions sx={{ justifyContent: "end" }}>
-        <Button variant="contained" size="large" startIcon={<Add />}>
-          Add Invoice
-        </Button>
-      </CardActions>
-    </Card>
+    </>
   );
 }

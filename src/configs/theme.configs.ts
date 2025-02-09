@@ -10,6 +10,9 @@ const theme = createTheme({
     primary: {
       main: "#3c50e0",
     },
+    success: {
+      main: "#34d399",
+    },
     background: {
       default: "#f1f5f9",
       dark: "#1c2434",
@@ -106,6 +109,13 @@ const theme = createTheme({
     },
     MuiTextField: {
       defaultProps: { fullWidth: true, size: "medium" },
+    },
+    MuiAlert: {
+      styleOverrides: {
+        icon: {
+          marginRight: "1rem",
+        },
+      },
     },
   },
   cssVariables: {

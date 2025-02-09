@@ -3,7 +3,7 @@ import { Box, BoxProps } from "@mui/material";
 
 // ** Component Imports
 import SideNav from "@/components/layouts/SideNav";
-import SideNavToggleButton from "@/components/layouts/SideNavToggleButton";
+import NavBar from "@/components/layouts/NavBar";
 
 // ** Constant Imports
 import { APP_SIDE_NAV_WIDTH } from "@/constants/app.constants";
@@ -18,7 +18,7 @@ export default function MainLayout({ children, ...props }: BoxProps) {
         flexDirection="column"
         flexGrow={1}
       >
-        <SideNavToggleButton />
+        <NavBar />
         <Box display="flex" flexGrow={1}>
           {children}
         </Box>

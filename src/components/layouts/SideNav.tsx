@@ -54,7 +54,7 @@ export default function SideNav() {
           "& .MuiDrawer-paper": {
             width: { sm: APP_SIDE_NAV_WIDTH, xs: "100%" },
             bgcolor: "background.dark",
-            color: theme.palette.getContrastText(theme.palette.background.dark),
+            color: theme.palette.common.white,
           },
         })}
         variant={isMobile ? "temporary" : "permanent"}

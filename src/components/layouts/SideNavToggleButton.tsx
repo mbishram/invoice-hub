@@ -1,10 +1,16 @@
 "use client";
 
-// ** MUI Imports
-import { Button } from "@mui/material";
+// ** Component Imports
+import OutlinedIconButton from "@/components/ui/OutlinedIconButton";
 
 // ** Store Imports
 import { setSideNav } from "@/stores/sideNav.store";
+
+// ** Icon Imports
+import { Menu } from "@mui/icons-material";
+
+// ** Hook Imports
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export default function SideNavToggleButton() {
   // Hooks

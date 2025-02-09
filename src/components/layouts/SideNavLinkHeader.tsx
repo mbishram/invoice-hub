@@ -7,10 +7,11 @@ export default function SideNavLinkHeader({
 }: TypographyProps) {
   return (
     <Typography
-      variant="button"
+      variant="body2"
       color="text.secondaryDark"
       px={4}
       fontWeight="600"
+      textTransform="uppercase"
       {...props}
     >
       {children}

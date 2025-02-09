@@ -1,3 +1,3 @@
-export default function InvoiceList() {
-  return <div>Invoice Add</div>;
+export default function InvoicesList() {
+  return <div>Invoices List</div>;
 }

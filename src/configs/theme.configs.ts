@@ -18,7 +18,7 @@ const theme = createTheme({
       secondaryDark: "#9d9d9d",
     },
   },
-  // Specific color schemes
+  // Specific theme color schemes
   colorSchemes: {
     dark: {
       palette: {
@@ -31,6 +31,10 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "var(--font-open-sans)",
+    button: {
+      textTransform: "initial",
+      fontWeight: "600",
+    },
   },
   components: {
     MuiAppBar: {
@@ -39,6 +43,43 @@ const theme = createTheme({
           paddingTop: "0.5rem",
           paddingBottom: "0.5rem",
         },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h1: { fontSize: "1.625rem", fontWeight: "700" },
+      },
+    },
+    MuiCardHeader: {
+      styleOverrides: {
+        root: {
+          padding: "1rem 1.5rem",
+          borderBottom: "1px solid",
+          borderBottomColor: "var(--mui-palette-divider)",
+        },
+        title: {
+          fontSize: "1rem",
+          fontWeight: "600",
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: "1.25rem 1.5rem",
+        },
+      },
+    },
+    MuiCardActions: {
+      styleOverrides: {
+        root: {
+          padding: "0 1.5rem 1.5rem",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: { paddingLeft: "3rem", paddingRight: "3rem" },
       },
     },
   },

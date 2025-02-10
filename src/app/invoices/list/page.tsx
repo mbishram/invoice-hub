@@ -9,6 +9,7 @@ import { Box, Typography } from "@mui/material";
 
 // ** Component Imports
 import InvoicesListForm from "@/components/invoices/list/InvoicesListForm";
+import InvoicesListTable from "@/components/invoices/list/InvoicesListTable";
 
 // ** Util Imports
 import { getTitleMeta } from "@/utils/page.utils";
@@ -33,10 +34,7 @@ export default function InvoicesList() {
           <InvoicesListForm />
         </Suspense>
       </Box>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
-      consectetur cumque dolor dolore dolorem doloribus dolorum eos, eum
-      molestias nisi non nostrum odit placeat, quasi ratione recusandae
-      reprehenderit saepe totam!
+      <InvoicesListTable />
     </>
   );
 }

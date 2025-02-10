@@ -13,6 +13,9 @@ const theme = createTheme({
     success: {
       main: "#34d399",
     },
+    warning: {
+      main: "#ffa70b",
+    },
     background: {
       default: "#f1f5f9",
       dark: "#1c2434",
@@ -103,6 +106,17 @@ const theme = createTheme({
       styleOverrides: {
         icon: {
           marginRight: "1rem",
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontSize: "1rem",
+        },
+        head: {
+          fontWeight: "600",
+          backgroundColor: "var(--mui-palette-background-default)",
         },
       },
     },

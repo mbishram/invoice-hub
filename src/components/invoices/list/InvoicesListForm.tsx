@@ -7,8 +7,10 @@ import { Box, InputAdornment, MenuItem } from "@mui/material";
 import ToolbarTextField from "@/components/ui/ToolbarTextField";
 
 // ** Third Party Imports
-import { useQueryState } from "nuqs";
 import { useDebouncedCallback } from "use-debounce";
+
+// ** Hook Imports
+import { useInvoicesData } from "@/hooks/useInvoicesData";
 
 // ** Icon Imports
 import Search from "@/components/icons/Search";
@@ -16,13 +18,15 @@ import Search from "@/components/icons/Search";
 // ** Constant Imports
 import { INVOICE_STATUS_OPTIONS } from "@/constants/invoiceStatus.constants";
 
-export default function InvoiceListForm() {
+export default function InvoicesListForm() {
   // States
-  const [search, setSearch] = useQueryState("search", { defaultValue: "" });
-  const [status, setStatus] = useQueryState("status", { defaultValue: "" });
+  const { search, status, setSearch, setStatus, setPage } = useInvoicesData();
 
   // Vars
-  const handleSearch = useDebouncedCallback((value) => setSearch(value), 300);
+  const handleSearch = useDebouncedCallback(async (value) => {
+    await setSearch(value);
+    await setPage(0);
+  }, 300);
 
   return (
     <Box display="flex" gap={2} alignItems="center">
@@ -42,10 +46,13 @@ export default function InvoiceListForm() {
         sx={{ width: { md: "15rem" } }}
       />
       <ToolbarTextField
-        defaultValue={status}
+        value={status}
         placeholder="All Status"
         select
-        onChange={(event) => setStatus(event.target.value)}
+        onChange={async (event) => {
+          await setStatus(event.target.value);
+          await setPage(0);
+        }}
         sx={{ width: "10rem" }}
       >
         <MenuItem value="">All Status</MenuItem>

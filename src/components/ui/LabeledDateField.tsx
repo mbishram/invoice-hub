@@ -48,11 +48,19 @@ export default function LabeledDateField<
         <FieldController
           control={control}
           name={name as Path<TRegister>}
-          render={({ onChange, ...fieldProps }) => (
+          render={({ onChange, ...fieldProps }, { fieldState }) => (
             <DateField
               id={name}
               {...fieldProps}
               onChange={(value) => onChange?.(value)}
+              slotProps={{
+                textField: { error: !!fieldState?.error },
+              }}
+              helperText={
+                !!fieldState?.error
+                  ? fieldState.error.message
+                  : props.helperText
+              }
               {...props}
             />
           )}

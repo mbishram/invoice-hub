@@ -20,6 +20,9 @@ import InlineAlert from "@/components/ui/InlineAlert";
 // ** Third Party Imports
 import { SubmitHandler, useForm } from "react-hook-form";
 import { unformat } from "@react-input/number-format";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { errorMap } from "zod-validation-error";
 
 // ** Icon Imports
 import { Add } from "@mui/icons-material";
@@ -33,6 +36,20 @@ import { APP_LOCALES } from "@/constants/app.constants";
 
 // ** Type Imports
 import { Invoice } from "@/lib/types/invoice";
+import { InvoiceStatus } from "@/lib/types/invoiceStatus";
+
+const schema = z.object({
+  name: z.string().min(1),
+  number: z.string().min(1),
+  dueDate: z.date(),
+  amount: z.string().min(1),
+  status: z.enum(
+    INVOICE_STATUS_OPTIONS.map(({ value }) => value) as [
+      InvoiceStatus,
+      ...InvoiceStatus[],
+    ],
+  ),
+});
 
 export default function InvoicesAddForm() {
   // Hooks
@@ -44,6 +61,7 @@ export default function InvoicesAddForm() {
       amount: "",
       status: "",
     },
+    resolver: zodResolver(schema, { errorMap }),
   });
 
   // Vars

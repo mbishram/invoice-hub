@@ -24,7 +24,7 @@ type FieldControllerProps<TRegister extends FieldValues> = Partial<
     controlProps:
       | FieldControllerMuiFieldProps<TRegister>
       | Record<string, undefined>,
-    data?: UseControllerReturn<TRegister>,
+    data: UseControllerReturn<TRegister> | Record<string, undefined>,
   ) => ReactElement;
   ControlProps?: Omit<
     ControllerProps<TRegister>,
@@ -59,5 +59,5 @@ export default function FieldController<TRegister extends FieldValues>(
   }
 
   // Handle render if it's not react-hook-form field
-  return props.render({});
+  return props.render({}, {});
 }

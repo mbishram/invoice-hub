@@ -19,6 +19,7 @@ export type LabeledTextFieldProps<TRegister extends FieldValues> =
 export default function LabeledTextField<TRegister extends FieldValues>({
   label,
   name,
+  required,
   sx,
   GroupProps,
   control,
@@ -28,13 +29,13 @@ export default function LabeledTextField<TRegister extends FieldValues>({
     <LabeledFieldGroup
       label={label}
       name={name}
-      required={props.required}
+      required={required}
       {...GroupProps}
     >
       <FieldController
         control={control}
         name={name as Path<TRegister>}
-        render={(fieldProps) => (
+        render={(fieldProps, { fieldState }) => (
           <TextField
             id={name}
             sx={{
@@ -51,6 +52,10 @@ export default function LabeledTextField<TRegister extends FieldValues>({
                 }),
               ...sx,
             }}
+            error={!!fieldState?.error}
+            helperText={
+              !!fieldState?.error ? fieldState.error.message : props.helperText
+            }
             {...fieldProps}
             {...props}
           />

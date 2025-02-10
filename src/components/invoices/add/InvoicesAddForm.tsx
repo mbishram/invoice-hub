@@ -1,5 +1,8 @@
 "use client";
 
+// ** React Imports
+import { useState } from "react";
+
 // ** MUI Imports
 import {
   Button,
@@ -29,6 +32,7 @@ import { Add } from "@mui/icons-material";
 
 // ** Config Imports
 import { inter } from "@/configs/font.configs";
+import dbV1 from "@/lib/schemas/v1.schemas";
 
 // ** Constant Imports
 import { INVOICE_STATUS_OPTIONS } from "@/constants/invoiceStatus.constants";
@@ -37,6 +41,7 @@ import { APP_LOCALES } from "@/constants/app.constants";
 // ** Type Imports
 import { Invoice } from "@/lib/types/invoice";
 import { InvoiceStatus } from "@/lib/types/invoiceStatus";
+import { Alert } from "@/lib/types/alert";
 
 const schema = z.object({
   name: z.string().min(1),
@@ -52,8 +57,15 @@ const schema = z.object({
 });
 
 export default function InvoicesAddForm() {
+  // States
+  const [alertData, setAlertData] = useState<Alert>({
+    hidden: true,
+    header: "",
+    content: "",
+  });
+
   // Hooks
-  const { control, handleSubmit } = useForm<Invoice>({
+  const { control, handleSubmit, reset } = useForm<Invoice>({
     defaultValues: {
       name: "",
       number: "",
@@ -65,10 +77,32 @@ export default function InvoicesAddForm() {
   });
 
   // Vars
-  const submitHandler: SubmitHandler<Invoice> = (data) => {
+  const submitHandler: SubmitHandler<Invoice> = async (data) => {
+    // Unformat amount
     data.amount = unformat(data.amount, APP_LOCALES);
 
-    console.log("_TST", data);
+    try {
+      await dbV1.invoices.add(data);
+
+      setAlertData({
+        hidden: false,
+        severity: "success",
+        header: "Invoice added successfully!",
+        content:
+          "You can view and manage your invoice in the 'My Invoices' section.",
+      });
+
+      reset();
+    } catch (error) {
+      console.error(error);
+
+      setAlertData({
+        hidden: false,
+        severity: "error",
+        header: "Invoice failed to be added!",
+        content: "Please try again in a couple of minutes.",
+      });
+    }
   };
 
   return (
@@ -155,13 +189,7 @@ export default function InvoicesAddForm() {
         </CardActions>
       </Card>
 
-      <InlineAlert
-        hidden={false}
-        severity="success"
-        header="Invoice added successfully!"
-        content="You can view and manage your invoice in the &#39;My Invoices&#39; section."
-        sx={{ mt: 4 }}
-      />
+      <InlineAlert {...alertData} setData={setAlertData} sx={{ mt: 4 }} />
     </>
   );
 }

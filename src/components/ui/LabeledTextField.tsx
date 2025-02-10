@@ -10,6 +10,9 @@ import FieldController from "@/components/ui/FieldController";
 // ** Third Party Imports
 import { Control, FieldValues, Path } from "react-hook-form";
 
+// ** Util Imports
+import { getSelectPlaceholderSX } from "@/utils/ui.utils";
+
 export type LabeledTextFieldProps<TRegister extends FieldValues> =
   TextFieldProps & {
     GroupProps?: LabeledFieldGroupProps;
@@ -39,17 +42,7 @@ export default function LabeledTextField<TRegister extends FieldValues>({
           <TextField
             id={name}
             sx={{
-              // To add placeholder for select field
-              ...(props.select &&
-                props.placeholder && {
-                  "& .MuiSelect-select span::before": {
-                    content:
-                      props.select && props.placeholder
-                        ? `'${props.placeholder}'`
-                        : undefined,
-                    color: "grey.400",
-                  },
-                }),
+              ...getSelectPlaceholderSX(props.select, props.placeholder),
               ...sx,
             }}
             error={!!fieldState?.error}

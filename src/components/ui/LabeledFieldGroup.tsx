@@ -11,10 +11,32 @@ export default function LabeledFieldGroup({
   name,
   required,
   children,
+  sx,
   ...props
 }: LabeledFieldGroupProps) {
   return (
-    <Box {...props}>
+    <Box
+      sx={{
+        // Update styling of component with start adornment
+        "& .MuiInputBase-adornedStart": {
+          "&.MuiInputBase-root": {
+            paddingLeft: 0,
+            alignItems: "unset",
+          },
+          "& .MuiInputAdornment-root": {
+            backgroundColor: "var(--mui-palette-divider)",
+            maxHeight: "unset",
+            padding: "0 1.5rem",
+            margin: 0,
+          },
+        },
+        "& .MuiOutlinedInput-input": {
+          px: "1.25rem",
+        },
+        ...sx,
+      }}
+      {...props}
+    >
       {label && (
         <Typography
           component="label"

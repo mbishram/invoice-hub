@@ -14,6 +14,7 @@ import MainLayout from "@/layouts/MainLayout";
 
 // ** Third Party Imports
 import { Toaster } from "react-hot-toast";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 // ** Util Imports
 import { getTitleMeta } from "@/utils/page.utils";
@@ -49,14 +50,16 @@ export default function RootLayout({
       >
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme} defaultMode="light">
-            {/* Init script to prevent flicker when switching theme mode */}
-            <InitColorSchemeScript attribute="class" />
-            <MainLayout>
-              <Toaster />
-              {/* Normalize element */}
-              <CssBaseline />
-              {children}
-            </MainLayout>
+            <NuqsAdapter>
+              {/* Init script to prevent flicker when switching theme mode */}
+              <InitColorSchemeScript attribute="class" />
+              <MainLayout>
+                <Toaster />
+                {/* Normalize element */}
+                <CssBaseline />
+                {children}
+              </MainLayout>
+            </NuqsAdapter>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </Box>

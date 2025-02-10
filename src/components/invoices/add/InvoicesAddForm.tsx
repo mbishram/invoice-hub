@@ -34,9 +34,11 @@ import { Add } from "@mui/icons-material";
 // ** Util Imports
 import { generateInvoiceNumber } from "@/utils/invoices.utils";
 
+// ** Schema Imports
+import dbV1 from "@/lib/schemas/v1.schemas";
+
 // ** Config Imports
 import { inter } from "@/configs/font.configs";
-import dbV1 from "@/lib/schemas/v1.schemas";
 
 // ** Constant Imports
 import { INVOICE_STATUS_OPTIONS } from "@/constants/invoiceStatus.constants";
@@ -70,7 +72,7 @@ export default function InvoicesAddForm() {
   });
 
   // Hooks
-  const { control, handleSubmit, reset } = useForm<Invoice>({
+  const { control, handleSubmit, reset, setValue } = useForm<Invoice>({
     defaultValues: {
       name: "",
       number: generateInvoiceNumber(),
@@ -103,6 +105,7 @@ export default function InvoicesAddForm() {
       });
 
       reset();
+      setValue("number", generateInvoiceNumber());
     } catch (error) {
       console.error(error);
 

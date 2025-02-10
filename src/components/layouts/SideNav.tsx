@@ -17,7 +17,7 @@ import CapitalLetter from "@/components/icons/CapitalLetter";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 // ** Store Imports
-import useSideNavStore, { setSideNav } from "@/stores/sideNav.store";
+import useSideNavStore, { setSideNav } from "@/stores/sideNav.stores";
 
 // ** Constant Imports
 import { APP_SIDE_NAV_WIDTH } from "@/constants/app.constants";

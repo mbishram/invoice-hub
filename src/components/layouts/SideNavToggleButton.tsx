@@ -4,7 +4,7 @@
 import OutlinedIconButton from "@/components/ui/OutlinedIconButton";
 
 // ** Store Imports
-import { setSideNav } from "@/stores/sideNav.store";
+import { setSideNav } from "@/stores/sideNav.stores";
 
 // ** Icon Imports
 import { Menu } from "@mui/icons-material";

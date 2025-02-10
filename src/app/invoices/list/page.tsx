@@ -1,3 +1,6 @@
+// ** React Imports
+import { Suspense } from "react";
+
 // ** Next Imports
 import type { Metadata } from "next";
 
@@ -26,7 +29,9 @@ export default function InvoicesList() {
         mb={4}
       >
         <Typography variant="h1">My Invoice</Typography>
-        <InvoicesListForm />
+        <Suspense>
+          <InvoicesListForm />
+        </Suspense>
       </Box>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi
       consectetur cumque dolor dolore dolorem doloribus dolorum eos, eum

@@ -2,7 +2,8 @@
 import dbV1 from "@/configs/db.configs";
 
 dbV1.version(1).stores({
-  invoices: "++id, name, number, dueDate, amount, status",
+  invoices:
+    "++id, name, number, dueDate, amount, status, createdAt, updatedAt, discardedAt",
 });
 
 // Reexport to get db version with schema added

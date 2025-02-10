@@ -8,4 +8,7 @@ export type Invoice = {
   dueDate: Date | "";
   amount: string;
   status: InvoiceStatus | "";
+  createdAt: Date;
+  updatedAt?: Date;
+  discardedAt?: Date;
 };

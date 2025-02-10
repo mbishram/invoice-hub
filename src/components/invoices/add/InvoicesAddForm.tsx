@@ -1,7 +1,7 @@
 "use client";
 
 // ** React Imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // ** MUI Imports
 import {
@@ -52,7 +52,7 @@ import { Alert } from "@/lib/types/alert";
 
 const schema = z.object({
   name: z.string().min(1),
-  number: z.string().min(15),
+  number: z.string().min(13),
   dueDate: z.date(),
   amount: z.string().min(1),
   status: z.enum(
@@ -75,7 +75,7 @@ export default function InvoicesAddForm() {
   const { control, handleSubmit, reset, setValue } = useForm<Invoice>({
     defaultValues: {
       name: "",
-      number: generateInvoiceNumber(),
+      number: "",
       dueDate: "",
       amount: "",
       status: "",
@@ -84,7 +84,7 @@ export default function InvoicesAddForm() {
   });
   // Invoice number format
   const numberInputRef = useMask({
-    mask: INVOICE_NUMBER_PREFIX + "-______-____",
+    mask: INVOICE_NUMBER_PREFIX + "__________",
     replacement: { _: /\d/ },
   });
 
@@ -94,7 +94,7 @@ export default function InvoicesAddForm() {
     data.amount = unformat(data.amount, APP_LOCALES);
 
     try {
-      await dbV1.invoices.add(data);
+      await dbV1.invoices.add({ ...data, createdAt: new Date() });
 
       setAlertData({
         hidden: false,
@@ -105,7 +105,7 @@ export default function InvoicesAddForm() {
       });
 
       reset();
-      setValue("number", generateInvoiceNumber());
+      setValue("number", await generateInvoiceNumber());
     } catch (error) {
       console.error(error);
 
@@ -117,6 +117,15 @@ export default function InvoicesAddForm() {
       });
     }
   };
+
+  // Lifecycles
+  useEffect(() => {
+    if (setValue) {
+      (async () => {
+        setValue("number", await generateInvoiceNumber());
+      })();
+    }
+  }, [setValue]);
 
   return (
     <>

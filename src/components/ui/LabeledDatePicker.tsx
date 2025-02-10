@@ -3,8 +3,9 @@
 
 // ** MUI Imports
 import {
-  DateField,
   DateFieldProps,
+  DatePicker,
+  DatePickerProps,
   PickerValidDate,
 } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -19,48 +20,52 @@ import FieldController from "@/components/ui/FieldController";
 // ** Third Party Imports
 import { Control, FieldValues, Path } from "react-hook-form";
 
-type LabeledDateFieldProps<
+type LabeledDatePickerProps<
   TDate extends PickerValidDate,
   TRegister extends FieldValues,
-> = DateFieldProps<TDate> & {
-  GroupProps?: LabeledFieldGroupProps;
-  control?: Control<TRegister>;
-};
+> = DatePickerProps<TDate> &
+  Pick<DateFieldProps<TDate>, "id" | "required" | "helperText"> & {
+    GroupProps?: LabeledFieldGroupProps;
+    control?: Control<TRegister>;
+  };
 
-export default function LabeledDateField<
+export default function LabeledDatePicker<
   TDate extends PickerValidDate,
   TRegister extends FieldValues,
 >({
   label,
   name,
+  id,
+  required,
+  helperText,
   GroupProps,
   control,
   ...props
-}: LabeledDateFieldProps<TDate, TRegister>) {
+}: LabeledDatePickerProps<TDate, TRegister>) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <LabeledFieldGroup
         label={label}
         name={name}
-        required={props.required}
+        required={required}
         {...GroupProps}
       >
         <FieldController
           control={control}
           name={name as Path<TRegister>}
           render={({ onChange, ...fieldProps }, { fieldState }) => (
-            <DateField
-              id={name}
+            <DatePicker
               {...fieldProps}
               onChange={(value) => onChange?.(value)}
               slotProps={{
-                textField: { error: !!fieldState?.error },
+                field: { id: id ?? name },
+                textField: {
+                  error: !!fieldState?.error,
+                  helperText: !!fieldState?.error
+                    ? fieldState.error.message
+                    : helperText,
+                },
               }}
-              helperText={
-                !!fieldState?.error
-                  ? fieldState.error.message
-                  : props.helperText
-              }
               {...props}
             />
           )}

@@ -17,6 +17,7 @@
     "@mui/material": "^6.4.3",
     "@mui/material-nextjs": "^6.4.3",
     "@mui/x-date-pickers": "^7.26.0",
+    "@react-input/mask": "^2.0.4",
     "@react-input/number-format": "^2.0.3",
     "date-fns": "^4.1.0",
     "dexie": "^4.0.11",

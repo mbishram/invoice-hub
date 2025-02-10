@@ -16,7 +16,7 @@ import {
 
 // ** Component Imports
 import LabeledTextField from "@/components/ui/LabeledTextField";
-import LabeledDateField from "@/components/ui/LabeledDateField";
+import LabeledDatePicker from "@/components/ui/LabeledDatePicker";
 import LabeledCurrencyField from "@/components/ui/LabeledCurrencyField";
 import InlineAlert from "@/components/ui/InlineAlert";
 
@@ -26,9 +26,13 @@ import { unformat } from "@react-input/number-format";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorMap } from "zod-validation-error";
+import { useMask } from "@react-input/mask";
 
 // ** Icon Imports
 import { Add } from "@mui/icons-material";
+
+// ** Util Imports
+import { generateInvoiceNumber } from "@/utils/invoices.utils";
 
 // ** Config Imports
 import { inter } from "@/configs/font.configs";
@@ -37,6 +41,7 @@ import dbV1 from "@/lib/schemas/v1.schemas";
 // ** Constant Imports
 import { INVOICE_STATUS_OPTIONS } from "@/constants/invoiceStatus.constants";
 import { APP_LOCALES } from "@/constants/app.constants";
+import { INVOICE_NUMBER_PREFIX } from "@/constants/invoices.constants";
 
 // ** Type Imports
 import { Invoice } from "@/lib/types/invoice";
@@ -45,7 +50,7 @@ import { Alert } from "@/lib/types/alert";
 
 const schema = z.object({
   name: z.string().min(1),
-  number: z.string().min(1),
+  number: z.string().min(15),
   dueDate: z.date(),
   amount: z.string().min(1),
   status: z.enum(
@@ -68,12 +73,17 @@ export default function InvoicesAddForm() {
   const { control, handleSubmit, reset } = useForm<Invoice>({
     defaultValues: {
       name: "",
-      number: "",
+      number: generateInvoiceNumber(),
       dueDate: "",
       amount: "",
       status: "",
     },
     resolver: zodResolver(schema, { errorMap }),
+  });
+  // Invoice number format
+  const numberInputRef = useMask({
+    mask: INVOICE_NUMBER_PREFIX + "-______-____",
+    replacement: { _: /\d/ },
   });
 
   // Vars
@@ -135,12 +145,13 @@ export default function InvoicesAddForm() {
                 label="Number"
                 name="number"
                 placeholder="Enter your invoice number"
+                inputRef={numberInputRef}
                 required
               />
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6 }}>
-              <LabeledDateField
+              <LabeledDatePicker
                 control={control}
                 label="Due Date"
                 name="dueDate"

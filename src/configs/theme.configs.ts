@@ -86,6 +86,11 @@ const theme = createTheme({
         root: { paddingLeft: "3rem", paddingRight: "3rem" },
       },
     },
+    MuiInputBase: {
+      styleOverrides: {
+        root: { overflow: "hidden" },
+      },
+    },
     MuiOutlinedInput: {
       styleOverrides: {
         input: { paddingTop: "0.75rem", paddingBottom: "0.75rem" },

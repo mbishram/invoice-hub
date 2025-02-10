@@ -14,16 +14,29 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import LabeledFieldGroup, {
   LabeledFieldGroupProps,
 } from "@/components/ui/LabeledFieldGroup";
+import FieldController from "@/components/ui/FieldController";
 
-type LabeledDateFieldProps<TDate extends PickerValidDate> =
-  DateFieldProps<TDate> & { GroupProps?: LabeledFieldGroupProps };
+// ** Third Party Imports
+import { Control, FieldValues, Path } from "react-hook-form";
 
-export default function LabeledDateField<TDate extends PickerValidDate>({
+type LabeledDateFieldProps<
+  TDate extends PickerValidDate,
+  TRegister extends FieldValues,
+> = DateFieldProps<TDate> & {
+  GroupProps?: LabeledFieldGroupProps;
+  control?: Control<TRegister>;
+};
+
+export default function LabeledDateField<
+  TDate extends PickerValidDate,
+  TRegister extends FieldValues,
+>({
   label,
   name,
   GroupProps,
+  control,
   ...props
-}: LabeledDateFieldProps<TDate>) {
+}: LabeledDateFieldProps<TDate, TRegister>) {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <LabeledFieldGroup
@@ -32,7 +45,18 @@ export default function LabeledDateField<TDate extends PickerValidDate>({
         required={props.required}
         {...GroupProps}
       >
-        <DateField id={name} name={name} {...props} />
+        <FieldController
+          control={control}
+          name={name as Path<TRegister>}
+          render={({ onChange, ...fieldProps }) => (
+            <DateField
+              id={name}
+              {...fieldProps}
+              onChange={(value) => onChange?.(value)}
+              {...props}
+            />
+          )}
+        />
       </LabeledFieldGroup>
     </LocalizationProvider>
   );

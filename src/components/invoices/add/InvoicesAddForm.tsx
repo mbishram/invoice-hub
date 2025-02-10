@@ -1,3 +1,5 @@
+"use client";
+
 // ** MUI Imports
 import {
   Button,
@@ -15,6 +17,10 @@ import LabeledDateField from "@/components/ui/LabeledDateField";
 import LabeledCurrencyField from "@/components/ui/LabeledCurrencyField";
 import InlineAlert from "@/components/ui/InlineAlert";
 
+// ** Third Party Imports
+import { SubmitHandler, useForm } from "react-hook-form";
+import { unformat } from "@react-input/number-format";
+
 // ** Icon Imports
 import { Add } from "@mui/icons-material";
 
@@ -23,11 +29,33 @@ import { inter } from "@/configs/font.configs";
 
 // ** Constant Imports
 import { INVOICE_STATUS_OPTIONS } from "@/constants/invoiceStatus.constants";
+import { APP_LOCALES } from "@/constants/app.constants";
+
+// ** Type Imports
+import { Invoice } from "@/lib/types/invoice";
 
 export default function InvoicesAddForm() {
+  // Hooks
+  const { control, handleSubmit } = useForm<Invoice>({
+    defaultValues: {
+      name: "",
+      number: "",
+      dueDate: "",
+      amount: "",
+      status: "",
+    },
+  });
+
+  // Vars
+  const submitHandler: SubmitHandler<Invoice> = (data) => {
+    data.amount = unformat(data.amount, APP_LOCALES);
+
+    console.log("_TST", data);
+  };
+
   return (
     <>
-      <Card>
+      <Card component="form" onSubmit={handleSubmit(submitHandler)}>
         <CardHeader
           title="Invoice Form"
           slotProps={{
@@ -41,6 +69,7 @@ export default function InvoicesAddForm() {
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, sm: 6 }}>
               <LabeledTextField
+                control={control}
                 label="Name"
                 name="name"
                 placeholder="Enter your invoice name"
@@ -50,6 +79,7 @@ export default function InvoicesAddForm() {
 
             <Grid size={{ xs: 12, sm: 6 }}>
               <LabeledTextField
+                control={control}
                 label="Number"
                 name="number"
                 placeholder="Enter your invoice number"
@@ -58,11 +88,17 @@ export default function InvoicesAddForm() {
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6 }}>
-              <LabeledDateField label="Due Date" name="dueDate" required />
+              <LabeledDateField
+                control={control}
+                label="Due Date"
+                name="dueDate"
+                required
+              />
             </Grid>
 
             <Grid size={{ xs: 12, sm: 6 }}>
               <LabeledCurrencyField
+                control={control}
                 label="Amount"
                 name="amount"
                 placeholder="Enter your invoice amount"
@@ -72,6 +108,7 @@ export default function InvoicesAddForm() {
 
             <Grid size={{ xs: 12, sm: 6 }}>
               <LabeledTextField
+                control={control}
                 label="Status"
                 name="status"
                 placeholder="Choose the status"
@@ -89,7 +126,12 @@ export default function InvoicesAddForm() {
         </CardContent>
 
         <CardActions sx={{ justifyContent: "end" }}>
-          <Button variant="contained" size="large" startIcon={<Add />}>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            startIcon={<Add />}
+          >
             Add Invoice
           </Button>
         </CardActions>

@@ -7,9 +7,11 @@ import { ChangeEvent, MouseEvent } from "react";
 import {
   Card,
   CardContent,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableFooter,
   TableHead,
   TablePagination,
@@ -50,74 +52,80 @@ export default function InvoicesListTable() {
     await setPage(0);
   };
 
+  // If loading, show skeleton
+  if (data === undefined)
+    return <Skeleton variant="rounded" width="100%" height={600} />;
+
   return (
     <Card>
       <CardContent>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Invoice</TableCell>
-              <TableCell>Due Date</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Amount</TableCell>
-              <TableCell sx={{ textAlign: "center" }}>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          {count && data && data.length ? (
-            <>
-              <TableBody>
-                {data.map((invoice) => (
-                  <TableRow key={invoice.id}>
-                    <TableCell>
-                      <Typography>{invoice.name}</Typography>
-                      <Typography color="text.secondary" fontWeight="600">
-                        {invoice.number}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>{format(invoice.dueDate, "PP")}</TableCell>
-                    <TableCell>
-                      <InvoicesListStatus status={invoice.status} />
-                    </TableCell>
-                    <TableCell>
-                      {formatCurrency(Number(invoice.amount))}
-                    </TableCell>
-                    <TableCell sx={{ textAlign: "center" }}>
-                      <InvoicesListTableAction data={invoice} />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    count={count}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    slotProps={{
-                      select: {
-                        inputProps: {
-                          "aria-label": "rows per page",
-                        },
-                      },
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TableRow>
-              </TableFooter>
-            </>
-          ) : (
-            <TableBody>
+        <TableContainer>
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={5} sx={{ textAlign: "center" }}>
-                  There&apos;s no data to show! Add one on &apos;Add
-                  Invoice&apos; page
-                </TableCell>
+                <TableCell>Invoice</TableCell>
+                <TableCell>Due Date</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell sx={{ textAlign: "center" }}>Action</TableCell>
               </TableRow>
-            </TableBody>
-          )}
-        </Table>
+            </TableHead>
+            {count && data && data.length ? (
+              <>
+                <TableBody>
+                  {data.map((invoice) => (
+                    <TableRow key={invoice.id}>
+                      <TableCell>
+                        <Typography>{invoice.name}</Typography>
+                        <Typography color="text.secondary" fontWeight="600">
+                          {invoice.number}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>{format(invoice.dueDate, "PP")}</TableCell>
+                      <TableCell>
+                        <InvoicesListStatus status={invoice.status} />
+                      </TableCell>
+                      <TableCell>
+                        {formatCurrency(Number(invoice.amount))}
+                      </TableCell>
+                      <TableCell sx={{ textAlign: "center" }}>
+                        <InvoicesListTableAction data={invoice} />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[5, 10, 25]}
+                      count={count}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      slotProps={{
+                        select: {
+                          inputProps: {
+                            "aria-label": "rows per page",
+                          },
+                        },
+                      }}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </TableRow>
+                </TableFooter>
+              </>
+            ) : (
+              <TableBody>
+                <TableRow>
+                  <TableCell colSpan={5} sx={{ textAlign: "center" }}>
+                    There&apos;s no data to show! Add one on &apos;Add
+                    Invoice&apos; page
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            )}
+          </Table>
+        </TableContainer>
       </CardContent>
     </Card>
   );

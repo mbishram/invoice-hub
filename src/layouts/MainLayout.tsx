@@ -10,17 +10,23 @@ import { APP_SIDE_NAV_WIDTH } from "@/constants/app.constants";
 
 export default function MainLayout({ children, ...props }: BoxProps) {
   return (
-    <Box display="flex" flexGrow={1} {...props}>
+    <Box display="flex" flexGrow={1} width="100%" {...props}>
       <SideNav />
       <Box
-        width={{ md: `calc(100% - ${APP_SIDE_NAV_WIDTH})` }}
+        width={{ md: `calc(100% - ${APP_SIDE_NAV_WIDTH})`, xs: "100%" }}
         display="flex"
         flexDirection="column"
         flexGrow={1}
       >
         <NavBar />
         <Container
-          sx={{ display: "flex", flexDirection: "column", flexGrow: 1, py: 6 }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flexGrow: 1,
+            width: "100%",
+            py: 6,
+          }}
         >
           {children}
         </Container>

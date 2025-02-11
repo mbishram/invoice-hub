@@ -47,6 +47,7 @@ export default function RootLayout({
         display="flex"
         flexDirection="column"
         flexGrow={1}
+        width="100%"
       >
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme} defaultMode="light">

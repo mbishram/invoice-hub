@@ -1,6 +1,9 @@
 // ** React Imports
 import { useState, MouseEvent } from "react";
 
+// ** Next Imports
+import Link from "next/link";
+
 // ** MUI Imports
 import { IconButton, MenuItem, Menu as MuiMenu } from "@mui/material";
 import { Menu } from "@mui/icons-material";
@@ -61,7 +64,13 @@ export default function InvoicesListTableAction({
           "aria-labelledby": "invoiceButton",
         }}
       >
-        <MenuItem onClick={handleClose}>Update</MenuItem>
+        <MenuItem
+          component={Link}
+          href={`/invoices/edit/${data.id}`}
+          onClick={handleClose}
+        >
+          Update
+        </MenuItem>
         <MenuItem
           onClick={() => {
             handleClose();

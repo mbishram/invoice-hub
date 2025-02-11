@@ -3,6 +3,9 @@
 // ** React Imports
 import { useEffect, useState } from "react";
 
+// ** Next Imports
+import { useRouter } from "next/navigation";
+
 // ** MUI Imports
 import {
   Button,
@@ -12,6 +15,7 @@ import {
   CardHeader,
   Grid2 as Grid,
   MenuItem,
+  Skeleton,
 } from "@mui/material";
 
 // ** Component Imports
@@ -22,14 +26,16 @@ import InlineAlert from "@/components/ui/InlineAlert";
 
 // ** Third Party Imports
 import { SubmitHandler, useForm } from "react-hook-form";
-import { unformat } from "@react-input/number-format";
+import { unformat, format } from "@react-input/number-format";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorMap } from "zod-validation-error";
 import { useMask } from "@react-input/mask";
+import { useLiveQuery } from "dexie-react-hooks";
+import toast from "react-hot-toast";
 
 // ** Icon Imports
-import { Add } from "@mui/icons-material";
+import { Add, Edit } from "@mui/icons-material";
 
 // ** Util Imports
 import { generateInvoiceNumber } from "@/utils/invoices.utils";
@@ -50,6 +56,8 @@ import { Invoice } from "@/lib/types/invoice";
 import { InvoiceStatus } from "@/lib/types/invoiceStatus";
 import { Alert } from "@/lib/types/alert";
 
+type InvoicesFormProps = { id?: number };
+
 const schema = z.object({
   name: z.string().min(1),
   number: z.string().min(13),
@@ -63,8 +71,13 @@ const schema = z.object({
   ),
 });
 
-export default function InvoicesAddForm() {
+export default function InvoicesForm({ id }: InvoicesFormProps) {
   // States
+  const data = useLiveQuery(
+    () => (id !== undefined ? dbV1.invoices.get(id) : undefined),
+    [id],
+    null,
+  );
   const [alertData, setAlertData] = useState<Alert>({
     hidden: true,
     header: "",
@@ -87,45 +100,83 @@ export default function InvoicesAddForm() {
     mask: INVOICE_NUMBER_PREFIX + "__________",
     replacement: { _: /\d/ },
   });
+  const router = useRouter();
 
   // Vars
+  const isEdit = !!id;
+  // If data === null, it meant it's still loading
+  const isLoading = data !== null;
+
   const submitHandler: SubmitHandler<Invoice> = async (data) => {
     // Unformat amount
     data.amount = unformat(data.amount, APP_LOCALES);
 
     try {
-      await dbV1.invoices.add({ ...data, createdAt: new Date() });
+      if (isEdit) {
+        await dbV1.invoices.update(id, { ...data, updatedAt: new Date() });
+      } else {
+        await dbV1.invoices.add({ ...data, createdAt: new Date() });
+      }
 
+      const successMessage = `Invoice ${isEdit ? "edited" : "added"} successfully!`;
       setAlertData({
         hidden: false,
         severity: "success",
-        header: "Invoice added successfully!",
+        header: successMessage,
         content:
           "You can view and manage your invoice in the 'My Invoices' section.",
       });
+      // Showing toast as well, The inline alert is not as nicely implemented as toast
+      toast.success(successMessage);
 
-      reset();
-      setValue("number", await generateInvoiceNumber());
+      if (!isEdit) {
+        reset();
+        setValue("number", await generateInvoiceNumber());
+      }
     } catch (error) {
       console.error(error);
 
+      const errorMessage = `Failed to ${isEdit ? "edit" : "add"} invoice!`;
       setAlertData({
         hidden: false,
         severity: "error",
-        header: "Invoice failed to be added!",
+        header: errorMessage,
         content: "Please try again in a couple of minutes.",
       });
+      // Showing toast as well, The inline alert is not as nicely implemented as toast
+      toast.success(errorMessage);
     }
   };
 
   // Lifecycles
   useEffect(() => {
-    if (setValue) {
+    if (setValue && !isEdit) {
       (async () => {
         setValue("number", await generateInvoiceNumber());
       })();
     }
-  }, [setValue]);
+  }, [setValue, isEdit]);
+
+  useEffect(() => {
+    // Don't do anything while loading
+    if (isLoading && isEdit) {
+      if (setValue && data) {
+        // Set initial value if it's edit form
+        setValue("name", data.name);
+        setValue("number", data.number);
+        setValue("dueDate", data.dueDate);
+        setValue("amount", format(data.amount, { locales: APP_LOCALES }));
+        setValue("status", data.status);
+      } else {
+        toast.error(`Something when wrong! Can't find invoice with id ${id}`);
+        router.replace("/invoices/list");
+      }
+    }
+  }, [setValue, isEdit, data, id, router, isLoading]);
+
+  // Return skeleton if it's edit and loading
+  if (isEdit && !data)
+    return <Skeleton variant="rounded" width="100%" height={440} />;
 
   return (
     <>
@@ -205,9 +256,9 @@ export default function InvoicesAddForm() {
             type="submit"
             variant="contained"
             size="large"
-            startIcon={<Add />}
+            startIcon={isEdit ? <Edit /> : <Add />}
           >
-            Add Invoice
+            {isEdit ? "Edit" : "Add"} Invoice
           </Button>
         </CardActions>
       </Card>

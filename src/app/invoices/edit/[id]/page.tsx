@@ -10,17 +10,19 @@ import InvoicesForm from "@/components/invoices/InvoicesForm";
 // ** Util Imports
 import { getTitleMeta } from "@/utils/page.utils";
 
+type InvoicesEditProps = { params: Promise<{ id: string }> };
+
 export const metadata: Metadata = {
-  title: getTitleMeta("Add Invoice"),
+  title: getTitleMeta("Edit Invoice"),
 };
 
-export default function InvoicesAdd() {
+export default async function InvoicesEdit({ params }: InvoicesEditProps) {
   return (
     <>
       <Typography variant="h1" mb={4}>
-        Add Invoice
+        Edit Invoice
       </Typography>
-      <InvoicesForm />
+      <InvoicesForm id={Number((await params).id)} />
     </>
   );
 }

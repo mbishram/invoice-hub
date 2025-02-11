@@ -5,12 +5,20 @@ import { useState, MouseEvent } from "react";
 import { IconButton, MenuItem, Menu as MuiMenu } from "@mui/material";
 import { Menu } from "@mui/icons-material";
 
+// ** Component Imports
+import InvoicesListTableDeleteDialog from "@/components/invoices/list/InvoicesListTableDeleteDialog";
+
 // ** Type Imports
 import { Invoice } from "@/lib/types/invoice";
 
-export default function InvoicesListTableAction({ id }: Pick<Invoice, "id">) {
+type InvoicesListTableActionProps = { data: Invoice };
+
+export default function InvoicesListTableAction({
+  data,
+}: InvoicesListTableActionProps) {
   // States
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   // Vars
   const open = Boolean(anchorEl);
@@ -35,6 +43,7 @@ export default function InvoicesListTableAction({ id }: Pick<Invoice, "id">) {
       >
         <Menu fontSize="inherit" />
       </IconButton>
+
       <MuiMenu
         id="invoiceMenu"
         anchorEl={anchorEl}
@@ -56,13 +65,19 @@ export default function InvoicesListTableAction({ id }: Pick<Invoice, "id">) {
         <MenuItem
           onClick={() => {
             handleClose();
-            console.log("_TST", id);
+            setIsDeleteModalOpen(true);
           }}
           sx={{ color: "error.main" }}
         >
           Delete
         </MenuItem>
       </MuiMenu>
+
+      <InvoicesListTableDeleteDialog
+        open={isDeleteModalOpen}
+        setOpen={setIsDeleteModalOpen}
+        data={data}
+      />
     </>
   );
 }

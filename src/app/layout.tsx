@@ -54,7 +54,7 @@ export default function RootLayout({
               {/* Init script to prevent flicker when switching theme mode */}
               <InitColorSchemeScript attribute="class" />
               <MainLayout>
-                <Toaster />
+                <Toaster position="bottom-center" />
                 {/* Normalize element */}
                 <CssBaseline />
                 {children}

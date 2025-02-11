@@ -120,6 +120,11 @@ const theme = createTheme({
         },
       },
     },
+    MuiDialogActions: {
+      styleOverrides: {
+        root: { padding: "0 1.5rem 1rem" },
+      },
+    },
   },
   cssVariables: {
     colorSchemeSelector: "class",

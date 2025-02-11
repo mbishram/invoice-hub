@@ -82,7 +82,7 @@ export default function InvoicesListTable() {
                       {formatCurrency(Number(invoice.amount))}
                     </TableCell>
                     <TableCell sx={{ textAlign: "center" }}>
-                      <InvoicesListTableAction id={invoice.id} />
+                      <InvoicesListTableAction data={invoice} />
                     </TableCell>
                   </TableRow>
                 ))}

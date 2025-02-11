@@ -26,6 +26,7 @@ export function useInvoicesData() {
   const query = useMemo(
     () =>
       dbV1.invoices
+        .filter((invoice) => !invoice.discardedAt) // Get undiscarded invoices only
         .filter((invoice) =>
           search
             ? invoice.name.toLowerCase().includes(search.toLowerCase()) ||

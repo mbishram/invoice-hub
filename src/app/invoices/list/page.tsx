@@ -34,7 +34,9 @@ export default function InvoicesList() {
           <InvoicesListForm />
         </Suspense>
       </Box>
-      <InvoicesListTable />
+      <Suspense>
+        <InvoicesListTable />
+      </Suspense>
     </>
   );
 }
